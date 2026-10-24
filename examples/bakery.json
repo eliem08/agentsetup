@@ -1,0 +1,3 @@
+{"type": "business", "members": [{"name": "Rosa", "age": 38}, {"name": "Tim", "age": 25}],
+ "tools": ["outlook", "quickbooks", "shopify"], "goals": ["inbox", "bookkeeping", "customer_replies", "social"],
+ "privacy": "cloud_ok", "monthly_budget": 150}

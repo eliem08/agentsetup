@@ -1,0 +1,3 @@
+{"type": "household", "members": [{"name": "Dana", "age": 44}, {"name": "Leo", "age": 12}, {"name": "Grandpa Joe", "age": 79}],
+ "tools": ["gmail", "google_calendar"], "goals": ["inbox", "calendar", "homework", "elder_care"],
+ "privacy": "cloud_ok", "monthly_budget": 75}

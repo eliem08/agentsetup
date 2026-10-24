@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-geek-squad"
+version = "0.1.0"
+description = "Geek Squad for AI: set up personal agents for families and small businesses"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = []
+
+[project.scripts]
+agent-geek-squad = "agent_geek_squad.__main__:main"
+
+[tool.setuptools]
+packages = ["agent_geek_squad"]
