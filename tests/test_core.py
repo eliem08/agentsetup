@@ -23,12 +23,28 @@ class Tests(unittest.TestCase):
         self.assertGreater(p.one_time, 49)
 
     def test_privacy_and_missing_tools(self):
-        p = plan({"type": "business", "members": [], "tools": [], "goals": ["bookkeeping", "inbox"], "privacy": "prefer_local"})
+        p = plan(
+            {
+                "type": "business",
+                "members": [],
+                "tools": [],
+                "goals": ["bookkeeping", "inbox"],
+                "privacy": "prefer_local",
+            }
+        )
         goals = [g for g, _ in p.skipped]
         self.assertEqual(sorted(goals), ["bookkeeping", "inbox"])
 
     def test_budget_trims_most_expensive(self):
-        p = plan({"type": "household", "members": [{"age": 40}], "tools": ["gmail"], "goals": ["inbox", "homework"], "monthly_budget": 30})
+        p = plan(
+            {
+                "type": "household",
+                "members": [{"age": 40}],
+                "tools": ["gmail"],
+                "goals": ["inbox", "homework"],
+                "monthly_budget": 30,
+            }
+        )
         self.assertLessEqual(p.monthly, 30)
         self.assertTrue(any("over monthly budget" in why for _, why in p.skipped))
 

@@ -1,5 +1,7 @@
 # agent-geek-squad
 
+[![CI](https://github.com/eliem08/agent-geek-squad/actions/workflows/ci.yml/badge.svg)](https://github.com/eliem08/agent-geek-squad/actions/workflows/ci.yml)
+
 > **Geek Squad for AI** — set up personal agents for families and small businesses.
 
 Most families and 5-person businesses will never wire up their own agents.
@@ -37,3 +39,26 @@ agent-geek-squad plan examples/bakery.json --rate 95
 - Technician app with credential vault handoff and photo-verified completion
 - Remote "care plan" monitoring using agent-alarm + agent-tracer
 - Franchise / partner network with certification
+
+## Development
+
+Zero runtime dependencies; Python 3.10+.
+
+```bash
+python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -e ".[dev]"
+python -m unittest discover -s tests -t .           # unit + CLI smoke tests
+ruff check . && ruff format --check .               # lint + format
+```
+
+```
+agent_geek_squad/core.py       domain logic (pure, importable, fully tested)
+agent_geek_squad/__main__.py   CLI (`agent-geek-squad ...` / `python -m agent_geek_squad ...`)
+tests/                unit tests + generated CLI smoke tests
+examples/             sample inputs used by the docs and smoke tests
+```
+
+CI runs lint and tests on Ubuntu and Windows across Python 3.10, 3.12 and 3.13.
+Design, data model, trade-offs and production path: **[ARCHITECTURE.md](ARCHITECTURE.md)**.
+
+Part of the [agent-economy](https://github.com/eliem08/agent-economy) portfolio (idea #16).
