@@ -190,6 +190,8 @@ def _fits(r: Recipe, intake: dict) -> str | None:
 
 
 def plan(intake: dict, rate_per_hour: float = 85.0, trip_fee: float = 49.0) -> Plan:
+    if not isinstance(intake, dict):
+        raise ValueError("intake must be a JSON object")
     chosen, skipped = [], []
     for goal in intake.get("goals", []):
         options = [r for r in RECIPES if r.goal == goal]
