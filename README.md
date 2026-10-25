@@ -47,7 +47,7 @@ Every plan starts with a 14-day free trial. Prices in USD, billed monthly unless
 | **Shop** | $149 per month | 5 technicians; Custom recipes and rates; Branded quotes |
 | **Done-for-you** | $299 per household setup | We set it up for you; Backups and protections included; 30 days of support |
 
-To start a trial or buy a plan, email **sales@YOUR-DOMAIN.com**.
+To start a trial or buy a plan, [request access](https://github.com/eliem08/agentsetup/issues/new?title=AgentSetup%20trial&labels=sales).
 
 ## Licence
 
