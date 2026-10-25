@@ -17,7 +17,7 @@ def _finite_float(s: str) -> float:
 
 
 def _run(argv=None):
-    ap = argparse.ArgumentParser(prog="agent-geek-squad")
+    ap = argparse.ArgumentParser(prog="agentsetup")
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("recipes")
     p = sub.add_parser("plan")

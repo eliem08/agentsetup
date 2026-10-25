@@ -2,7 +2,7 @@ import json
 import pathlib
 import unittest
 
-from agent_geek_squad import plan
+from agentsetup import plan
 
 EX = pathlib.Path(__file__).resolve().parent.parent / "examples"
 

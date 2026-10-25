@@ -1,4 +1,4 @@
-# Architecture — agent-geek-squad
+# Architecture — agentsetup
 
 ## 1. Scope
 Technician toolkit for setting up personal agents safely for families and small businesses.

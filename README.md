@@ -1,16 +1,45 @@
-# agent-geek-squad
+<!-- sell-kit:start -->
+# AgentSetup
 
-[![CI](https://github.com/eliem08/agent-geek-squad/actions/workflows/ci.yml/badge.svg)](https://github.com/eliem08/agent-geek-squad/actions/workflows/ci.yml)
+[![CI](https://github.com/eliem08/agentsetup/actions/workflows/ci.yml/badge.svg)](https://github.com/eliem08/agentsetup/actions/workflows/ci.yml)
 
-> **Geek Squad for AI** — set up personal agents for families and small businesses.
+> **Set up safe personal AI agents for families and small businesses.**
 
-Most families and 5-person businesses will never wire up their own agents.
-They'll pay someone to come in, set it up safely and keep it running.
-`agent-geek-squad` is the technician's toolkit: an intake questionnaire
-becomes a recommended agent stack, safety settings, a step-by-step setup
-checklist and a priced service quote.
+**Who it's for:** IT consultants and MSPs, and the households and small firms they serve.
 
-## What the MVP does
+**The problem:** People want AI agents working for them but can't tell which tools are safe, how to set them up or what it should cost.
+
+**What you get:** Turn an intake form into a safe agent stack, a step-by-step setup checklist and a one-time plus monthly quote, with backups and protections included by default.
+
+## Quickstart
+
+Customers receive a release archive with the wheel and the examples. Python 3.10+ and no other dependencies.
+
+```bash
+pip install agentsetup-0.1.0-py3-none-any.whl
+agentsetup recipes
+agentsetup plan examples/family.json
+agentsetup plan examples/bakery.json --rate 95
+```
+
+## Pricing
+
+Every plan starts with a 14-day free trial. Prices in USD, billed monthly unless noted.
+
+| Plan | Price | Includes |
+|---|---|---|
+| **Solo Tech** | $39 per month | Unlimited intakes and quotes; Setup checklists; Safety defaults |
+| **Shop** | $149 per month | 5 technicians; Custom recipes and rates; Branded quotes |
+| **Done-for-you** | $299 per household setup | We set it up for you; Backups and protections included; 30 days of support |
+
+To start a trial or buy a plan, email **sales@YOUR-DOMAIN.com**.
+
+## Licence
+
+Proprietary. Copyright (c) 2026 eliem08. All rights reserved. Use requires a paid plan or an active trial; see [LICENSE](LICENSE).
+<!-- sell-kit:end -->
+
+## What it does
 
 - **Intake** (JSON or interactive): household vs. business, members & ages,
   tools already used (Gmail, Outlook, QuickBooks, Shopify…), goals, privacy
@@ -29,9 +58,9 @@ checklist and a priced service quote.
 
 ```bash
 pip install -e .
-agent-geek-squad recipes
-agent-geek-squad plan examples/family.json
-agent-geek-squad plan examples/bakery.json --rate 95
+agentsetup recipes
+agentsetup plan examples/family.json
+agentsetup plan examples/bakery.json --rate 95
 ```
 
 ## Roadmap
@@ -52,8 +81,8 @@ ruff check . && ruff format --check .               # lint + format
 ```
 
 ```
-agent_geek_squad/core.py       domain logic (pure, importable, fully tested)
-agent_geek_squad/__main__.py   CLI (`agent-geek-squad ...` / `python -m agent_geek_squad ...`)
+agentsetup/core.py       domain logic (pure, importable, fully tested)
+agentsetup/__main__.py   CLI (`agentsetup ...` / `python -m agentsetup ...`)
 tests/                unit tests + generated CLI smoke tests
 examples/             sample inputs used by the docs and smoke tests
 ```

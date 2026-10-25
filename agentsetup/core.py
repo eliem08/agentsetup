@@ -151,7 +151,7 @@ RECIPES = [
         45,
         10,
         True,
-        ["One identity per agent (agent-okta)", "Least-privilege scopes", "Weekly audit review"],
+        ["One identity per agent (agentwarden)", "Least-privilege scopes", "Weekly audit review"],
     ),
     Recipe(
         "backups",
