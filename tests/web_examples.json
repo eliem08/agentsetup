@@ -1,0 +1,26 @@
+[
+ {
+  "op": "recipes",
+  "payload": {}
+ },
+ {
+  "op": "plan",
+  "payload": {
+   "intake": {
+    "name": "family.json",
+    "content": "{\"type\": \"household\", \"members\": [{\"name\": \"Dana\", \"age\": 44}, {\"name\": \"Leo\", \"age\": 12}, {\"name\": \"Grandpa Joe\", \"age\": 79}],\n \"tools\": [\"gmail\", \"google_calendar\"], \"goals\": [\"inbox\", \"calendar\", \"homework\", \"elder_care\"],\n \"privacy\": \"cloud_ok\", \"monthly_budget\": 75}\n"
+   },
+   "rate": 85.0
+  }
+ },
+ {
+  "op": "plan",
+  "payload": {
+   "intake": {
+    "name": "bakery.json",
+    "content": "{\"type\": \"business\", \"members\": [{\"name\": \"Rosa\", \"age\": 38}, {\"name\": \"Tim\", \"age\": 25}],\n \"tools\": [\"outlook\", \"quickbooks\", \"shopify\"], \"goals\": [\"inbox\", \"bookkeeping\", \"customer_replies\", \"social\"],\n \"privacy\": \"cloud_ok\", \"monthly_budget\": 150}\n"
+   },
+   "rate": 95.0
+  }
+ }
+]

@@ -23,6 +23,7 @@ dev = ["ruff>=0.6"]
 
 [project.scripts]
 agentsetup = "agentsetup.__main__:main"
+agentsetup-web = "agentsetup.web:main"
 
 [project.urls]
 Repository = "https://github.com/eliem08/agentsetup"

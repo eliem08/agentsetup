@@ -16,13 +16,18 @@ def _finite_float(s: str) -> float:
     return v
 
 
-def _run(argv=None):
+def build_parser():
     ap = argparse.ArgumentParser(prog="agentsetup")
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("recipes")
     p = sub.add_parser("plan")
     p.add_argument("intake")
     p.add_argument("--rate", type=_finite_float, default=85.0)
+    return ap
+
+
+def _run(argv=None):
+    ap = build_parser()
     a = ap.parse_args(argv)
     if a.cmd == "recipes":
         for r in RECIPES:
