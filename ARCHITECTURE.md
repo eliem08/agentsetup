@@ -3,7 +3,7 @@
 ## 1. Scope
 Technician toolkit for setting up personal agents safely for families and small businesses.
 **MVP:** intake → recipe planner (goal + tool fit + privacy), mandatory safety recipes, budget trimming, checklist, quote.
-**Product:** technician app, credential vault handoff, remote care-plan monitoring, partner network.
+**Product:** technician app, credential vault handoff, remote care-plan monitoring, partner network (roadmap, not shipped).
 
 ## 2. System context
 ```mermaid
@@ -14,6 +14,8 @@ flowchart LR
   Plan --> Tech[Technician app] -->|setup visit| Home[Customer accounts]
   Home -->|telemetry| Care[Care plan monitoring: agent-alarm]
 ```
+
+Technician app and care-plan monitoring are roadmap items, not shipped; the shipped flow ends at the plan, checklist and quote.
 
 ## 3. Planner algorithm
 1. For each goal, pick the first recipe whose audience, required tools and privacy constraints fit.
@@ -29,10 +31,12 @@ flowchart LR
 - **Safety is non-negotiable and budget-exempt.** This is the brand promise, and it's encoded in the planner.
 - **Skips are explained** ("needs one of [quickbooks]"), so the technician can upsell or adjust the intake.
 
-## 5. Production architecture
-Recipes in a versioned YAML repo, compiled to JSON. A planner service. A technician PWA (offline
+## 5. Future production architecture (not shipped)
+Not shipped: recipes in a versioned YAML repo, compiled to JSON. A planner service. A technician PWA (offline
 checklist, photo proof per step). Credentials never stored in plain text: handoff goes straight to
-the customer's password manager. Care plan ingests agent-alarm events.
+the customer's password manager. Care plan ingests agent-alarm events. The shipped MVP is the
+file-backed planner, checklist and quote described above; the technician app and care-plan
+monitoring in the diagram above are roadmap items, not shipped features.
 
 ## 6. Risks
 Liability for misconfiguration, so per-step completion evidence plus an E&O policy (agent-insure).
