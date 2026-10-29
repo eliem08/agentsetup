@@ -48,22 +48,24 @@ To sell self-serve, set four variables and point a Stripe webhook at `https://<y
 |---|---|
 | `STRIPE_SECRET_KEY` | `sk_live_...` |
 | `STRIPE_WEBHOOK_SECRET` | `whsec_...` |
-| `STRIPE_PRICES` | `team=price_123,business=price_456` |
+| `STRIPE_PRICES` | `solo-tech=price_123,shop=price_456` |
 | `PUBLIC_URL` | `https://agentsetup.example.com` |
 
 Buyers pick a plan on `/pricing`, pay on Stripe Checkout and see their API key once on the success page. Cancelling the subscription revokes the key. A selling server always requires a key.
 
 ## Pricing
 
-Every plan starts with a 14-day free trial. Prices in USD, billed monthly unless noted.
+Every monthly plan starts with a 14-day free trial. Prices in USD, billed monthly unless noted.
+All plans unlock the same software in this release; higher tiers add licence scope and support,
+not gated features (technician counts are licence terms, not enforced limits).
 
 | Plan | Price | Includes |
 |---|---|---|
 | **Solo Tech** | $39 per month | Unlimited intakes and quotes; Setup checklists; Safety defaults |
-| **Shop** | $149 per month | 5 technicians; Custom recipes and rates; Branded quotes |
-| **Done-for-you** | $299 per household setup | We set it up for you; Backups and protections included; 30 days of support |
+| **Shop** | $149 per month | Everything in Solo Tech |
+| **Done-for-you** | $299 per household setup | Service engagement, contact sales only: we set it up for you; Backups and protections included; 30 days of support — no trial, no self-serve checkout, and it must not be added to `STRIPE_PRICES` |
 
-To start a trial or buy a plan, [request access](https://github.com/eliem08/agentsetup/issues/new?title=AgentSetup%20trial&labels=sales).
+To start a trial, buy a plan, or book a Done-for-you setup, [request access](https://github.com/eliem08/agentsetup/issues/new?title=AgentSetup%20trial&labels=sales). Copy `.env.example` to `.env` and fill in real values (never commit `.env`).
 
 ## Licence
 
