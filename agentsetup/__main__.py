@@ -6,6 +6,7 @@ import os
 import sys
 
 from .core import RECIPES, plan
+from .ops import OPS, add_ops, run_ops
 
 
 def _finite_float(s: str) -> float:
@@ -23,12 +24,15 @@ def build_parser():
     p = sub.add_parser("plan")
     p.add_argument("intake")
     p.add_argument("--rate", type=_finite_float, default=85.0)
+    add_ops(sub)
     return ap
 
 
 def _run(argv=None):
     ap = build_parser()
     a = ap.parse_args(argv)
+    if a.cmd in OPS:
+        return run_ops(a)
     if a.cmd == "recipes":
         for r in RECIPES:
             print(f"{r.key:<26} {r.audience:<10} {r.minutes:>3} min  ${r.monthly:>5.2f}/mo  {r.title}")

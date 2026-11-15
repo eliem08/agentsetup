@@ -17,9 +17,9 @@ Customers receive a release archive with the wheel and the examples. Python 3.10
 
 ```bash
 pip install agentsetup-0.1.0-py3-none-any.whl
-agentsetup recipes
-agentsetup plan examples/family.json
-agentsetup plan examples/bakery.json --rate 95
+agentsetup job-open "Rosa's Bakery" examples/bakery.json --store jobs.json
+agentsetup job-step JOB-0001 1 --note "Used the shop Outlook account" --store jobs.json
+agentsetup job-show JOB-0001 --store jobs.json
 ```
 
 ## Web app and API
@@ -34,7 +34,7 @@ docker build -t agentsetup . && docker run -p 8000:8000 -e API_KEYS=sk_... -v ag
 
 Every API call needs `Authorization: Bearer <key>` once any key exists; a server on a public address refuses to start without one. Calls are rate-limited per key (60/min, `--rate`) and metered: `agentsetup-web usage` prints calls per key for billing.
 
-Endpoints: `POST /api/recipes`, `POST /api/plan`, plus `GET /healthz` and `GET /api/spec` (machine-readable field list).
+Endpoints: `POST /api/recipes`, `POST /api/plan`, `POST /api/job-open`, `POST /api/job-step`, `POST /api/job-show`, `POST /api/job-close`, `POST /api/jobs`, plus `GET /healthz` and `GET /api/spec` (machine-readable field list).
 Files are sent as `{"name": ..., "content": ...}`, folders as `{"files": [...]}` or a base64 zip.
 
 ## Deploy and sell

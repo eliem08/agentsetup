@@ -1,5 +1,34 @@
 [
  {
+  "op": "job-open",
+  "payload": {
+   "client": "Rosa's Bakery",
+   "intake": {
+    "name": "bakery.json",
+    "content": "{\"type\": \"business\", \"members\": [{\"name\": \"Rosa\", \"age\": 38}, {\"name\": \"Tim\", \"age\": 25}],\n \"tools\": [\"outlook\", \"quickbooks\", \"shopify\"], \"goals\": [\"inbox\", \"bookkeeping\", \"customer_replies\", \"social\"],\n \"privacy\": \"cloud_ok\", \"monthly_budget\": 150}\n"
+   },
+   "rate": 85.0
+  }
+ },
+ {
+  "op": "job-step",
+  "payload": {
+   "job_id": "JOB-0001",
+   "step": 1,
+   "note": "Used the shop Outlook account"
+  }
+ },
+ {
+  "op": "job-show",
+  "payload": {
+   "job_id": "JOB-0001"
+  }
+ },
+ {
+  "op": "jobs",
+  "payload": {}
+ },
+ {
   "op": "recipes",
   "payload": {}
  },

@@ -48,9 +48,9 @@
     <h2>Quickstart</h2>
     <p>Python 3.10+, no other dependencies. Your release archive includes the wheel and examples.</p>
     <pre><code>pip install agentsetup-0.1.0-py3-none-any.whl
-agentsetup recipes
-agentsetup plan examples/family.json
-agentsetup plan examples/bakery.json --rate 95</code></pre>
+agentsetup job-open &quot;Rosa&#x27;s Bakery&quot; examples/bakery.json --store jobs.json
+agentsetup job-step JOB-0001 1 --note &quot;Used the shop Outlook account&quot; --store jobs.json
+agentsetup job-show JOB-0001 --store jobs.json</code></pre>
   </section>
   <section>
     <h2>Pricing</h2>
