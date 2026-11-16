@@ -75,7 +75,7 @@ Proprietary. Copyright (c) 2026 eliem08. All rights reserved. Use requires a pai
 
 ## What it does
 
-- **Intake** (JSON or interactive): household vs. business, members & ages,
+- **Intake** (a JSON file): household vs. business, members & ages,
   tools already used (Gmail, Outlook, QuickBooks, Shopify…), goals, privacy
   preference (`cloud_ok` / `prefer_local`), monthly budget
 - **Recipe catalogue** of ~12 setup recipes (inbox triage, family calendar,
