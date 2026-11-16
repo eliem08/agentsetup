@@ -220,4 +220,24 @@ SPEC = {
             "id": "jobs",
         },
     ],
+    "plans": [
+        {
+            "key": "solo-tech",
+            "name": "Solo Tech",
+            "price": "$39 per month",
+            "features": ["Unlimited intakes and quotes", "Setup checklists", "Safety defaults"],
+        },
+        {
+            "key": "shop",
+            "name": "Shop",
+            "price": "$149 per month",
+            "features": ["5 technicians", "Custom hourly rate", "Tracked jobs with sign-off"],
+        },
+        {
+            "key": "done-for-you",
+            "name": "Done-for-you",
+            "price": "$299 per household setup",
+            "features": ["We set it up for you", "Backups and protections included", "30 days of support"],
+        },
+    ],
 }
