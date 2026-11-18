@@ -189,12 +189,21 @@ def _fits(r: Recipe, intake: dict) -> str | None:
     return None
 
 
-def plan(intake: dict, rate_per_hour: float = 85.0, trip_fee: float = 49.0) -> Plan:
+def all_recipes(custom: list | None = None) -> list:
+    """The shop's own recipes first (so they win when both fit), then the built-in ones not replaced."""
+    own = list(custom or [])
+    keys = {r.key for r in own}
+    return own + [r for r in RECIPES if r.key not in keys]
+
+
+def plan(intake: dict, rate_per_hour: float = 85.0, trip_fee: float = 49.0, custom: list | None = None) -> Plan:
     if not isinstance(intake, dict):
         raise ValueError("intake must be a JSON object")
+    recipes = all_recipes(custom)
+    by_key = {r.key: r for r in recipes}
     chosen, skipped = [], []
     for goal in intake.get("goals", []):
-        options = [r for r in RECIPES if r.goal == goal]
+        options = [r for r in recipes if r.goal == goal]
         fits = [r for r in options if not _fits(r, intake)]
         if fits:
             chosen.append(fits[0])
@@ -208,7 +217,7 @@ def plan(intake: dict, rate_per_hour: float = 85.0, trip_fee: float = 49.0) -> P
         mandatory.append("scam_shield")
     if intake["type"] == "business":
         mandatory.append("access_controls")
-    chosen += [BY_KEY[k] for k in mandatory]
+    chosen += [by_key[k] for k in mandatory]
 
     budget = intake.get("monthly_budget")
     if budget is not None:

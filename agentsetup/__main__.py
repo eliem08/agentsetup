@@ -5,8 +5,8 @@ import math
 import os
 import sys
 
-from .core import RECIPES, plan
-from .ops import OPS, add_ops, run_ops
+from .core import all_recipes, plan
+from .ops import OPS, add_ops, custom_recipes, run_ops
 
 
 def _finite_float(s: str) -> float:
@@ -20,10 +20,13 @@ def _finite_float(s: str) -> float:
 def build_parser():
     ap = argparse.ArgumentParser(prog="agentsetup")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("recipes")
+    store = os.environ.get("AGENTSETUP_STORE", "jobs.json")
+    sub.add_parser("recipes", help="built-in recipes and your own").add_argument("--store", default=store)
     p = sub.add_parser("plan")
     p.add_argument("intake")
     p.add_argument("--rate", type=_finite_float, default=85.0)
+    p.add_argument("--trip-fee", type=_finite_float, default=49.0)
+    p.add_argument("--store", default=store, help="where your own recipes are kept")
     add_ops(sub)
     return ap
 
@@ -33,12 +36,16 @@ def _run(argv=None):
     a = ap.parse_args(argv)
     if a.cmd in OPS:
         return run_ops(a)
+    own = custom_recipes(a.store)
     if a.cmd == "recipes":
-        for r in RECIPES:
+        keys = {r.key for r in own}
+        for r in all_recipes(own):
+            mark = "*" if r.key in keys else " "
+            print(f"{mark}", end="")
             print(f"{r.key:<26} {r.audience:<10} {r.minutes:>3} min  ${r.monthly:>5.2f}/mo  {r.title}")
         return 0
     with open(a.intake, encoding="utf-8-sig") as fh:
-        pl = plan(json.load(fh), a.rate)
+        pl = plan(json.load(fh), a.rate, a.trip_fee, own)
     print("Recommended stack:")
     for t in pl.recipes:
         print(f"  + {t}")

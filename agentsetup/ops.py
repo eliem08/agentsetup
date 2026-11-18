@@ -9,9 +9,10 @@ import json
 import os
 import time
 
-from .core import plan
+from .core import RECIPES, Recipe, plan
 
-OPS = ("job-open", "job-step", "job-show", "job-close", "jobs")
+OPS = ("recipe-add", "recipe-remove", "job-open", "job-step", "job-show", "job-close", "jobs")
+AUDIENCES = ("any", "household", "business")
 
 
 class JobError(ValueError):
@@ -29,6 +30,11 @@ def load(path: str) -> dict:
     return doc
 
 
+def custom_recipes(path: str) -> list:
+    """The shop's own recipes from the store (an empty list if there is no store yet)."""
+    return [Recipe(**r) for r in load(path).get("recipes", {}).values()]
+
+
 def save(doc: dict, path: str):
     tmp = f"{path}.tmp"
     with open(tmp, "w", encoding="utf-8") as fh:
@@ -38,10 +44,22 @@ def save(doc: dict, path: str):
 
 def add_ops(sub):
     store = os.environ.get("AGENTSETUP_STORE", "jobs.json")
+    p = sub.add_parser("recipe-add", help="add a setup you sell (or replace a built-in one with the same key)")
+    p.add_argument("key", help="short id, e.g. crm_hubspot")
+    p.add_argument("--title", required=True)
+    p.add_argument("--goal", help="the intake goal it answers, e.g. crm; leave out for add-on recipes")
+    p.add_argument("--audience", choices=AUDIENCES, default="any")
+    p.add_argument("--needs", action="append", default=[], help="a tool the client must have (repeatable; any one)")
+    p.add_argument("--minutes", type=int, required=True, help="technician time on site")
+    p.add_argument("--monthly", type=float, default=0.0, help="software cost per month")
+    p.add_argument("--cloud", action="store_true", help="needs cloud processing (skipped for local-only clients)")
+    p.add_argument("--step", action="append", required=True, help="a checklist step (repeatable, in order)")
+    sub.add_parser("recipe-remove", help="delete one of your recipes").add_argument("key")
     p = sub.add_parser("job-open", help="turn a client intake into a priced job with a checklist")
     p.add_argument("client")
     p.add_argument("intake", help="the intake JSON file")
     p.add_argument("--rate", type=float, default=85.0, help="technician rate per hour")
+    p.add_argument("--trip-fee", type=float, default=49.0, help="flat fee per visit")
     p = sub.add_parser("job-step", help="tick off a checklist step on site")
     p.add_argument("job_id")
     p.add_argument("step", type=int, help="step number from job-show")
@@ -76,11 +94,45 @@ def _left(job: dict) -> int:
 
 def _run(doc: dict, a):
     c = a.cmd
-    if c == "job-open":
-        if not (a.rate > 0):
-            raise JobError("rate must be > 0")
+    if c == "recipe-add":
+        key = a.key.strip()
+        if not key or not key.replace("_", "").replace("-", "").isalnum():
+            raise JobError("key must be letters, digits, - or _")
+        if not 1 <= a.minutes <= 600:
+            raise JobError("--minutes must be between 1 and 600")
+        if not 0 <= a.monthly <= 100_000:
+            raise JobError("--monthly must be between 0 and 100000")
+        steps = [s.strip() for s in a.step if s.strip()]
+        if not steps:
+            raise JobError("give at least one --step")
+        rec = Recipe(
+            key,
+            a.title.strip(),
+            (a.goal or "").strip() or None,
+            a.audience,
+            [t.strip().lower() for t in a.needs if t.strip()],
+            a.minutes,
+            a.monthly,
+            not a.cloud,
+            steps,
+        )
+        doc.setdefault("recipes", {})[key] = rec.__dict__
+        replaced = any(r.key == key for r in RECIPES)
+        print(
+            f"recipe {key}: {rec.title}, {len(steps)} steps, {a.minutes} min"
+            + (" (replaces the built-in one)" if replaced else "")
+        )
+    elif c == "recipe-remove":
+        if a.key not in doc.get("recipes", {}):
+            raise JobError(f"no recipe {a.key!r} of your own")
+        del doc["recipes"][a.key]
+        print(f"removed recipe {a.key}")
+    elif c == "job-open":
+        if not (a.rate > 0) or not (a.trip_fee >= 0):
+            raise JobError("rate must be > 0 and trip fee >= 0")
         with open(a.intake, encoding="utf-8-sig") as fh:
-            pl = plan(json.load(fh), a.rate)
+            own = [Recipe(**r) for r in doc.get("recipes", {}).values()]
+            pl = plan(json.load(fh), a.rate, a.trip_fee, own)
         if not pl.checklist:
             raise JobError("this intake produces no work: check its goals and tools")
         ids = itertools.count(int(doc.get("next_id", 1)))

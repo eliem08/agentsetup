@@ -9,7 +9,7 @@
 
 **The problem:** People want AI agents working for them but can't tell which tools are safe, how to set them up or what it should cost.
 
-**What you get:** Turn an intake form into a safe agent stack, a step-by-step setup checklist and a one-time plus monthly quote, with backups and protections included by default.
+**What you get:** Turn an intake form into a safe agent stack from built-in and your own setup recipes, a step-by-step setup checklist and a one-time plus monthly quote, with backups and protections included by default.
 
 ## Quickstart
 
@@ -34,7 +34,7 @@ docker build -t agentsetup . && docker run -p 8000:8000 -e API_KEYS=sk_... -v ag
 
 Every API call needs `Authorization: Bearer <key>` once any key exists; a server on a public address refuses to start without one. Calls are rate-limited per key (60/min, `--rate`) and metered: `agentsetup-web usage` prints calls per key for billing.
 
-Endpoints: `POST /api/recipes`, `POST /api/plan`, `POST /api/job-open`, `POST /api/job-step`, `POST /api/job-show`, `POST /api/job-close`, `POST /api/jobs`, plus `GET /healthz` and `GET /api/spec` (machine-readable field list).
+Endpoints: `POST /api/recipes`, `POST /api/plan`, `POST /api/recipe-add`, `POST /api/recipe-remove`, `POST /api/job-open`, `POST /api/job-step`, `POST /api/job-show`, `POST /api/job-close`, `POST /api/jobs`, plus `GET /healthz` and `GET /api/spec` (machine-readable field list).
 Files are sent as `{"name": ..., "content": ...}`, folders as `{"files": [...]}` or a base64 zip.
 
 ## Deploy and sell
@@ -61,7 +61,7 @@ Monthly plans start with a 14-day free trial. Prices in USD, billed monthly unle
 | Plan | Price | Includes |
 |---|---|---|
 | **Solo Tech** | $39 per month | Unlimited intakes and quotes; Setup checklists; Safety defaults |
-| **Shop** | $149 per month | 5 technicians; Custom hourly rate; Tracked jobs with sign-off |
+| **Shop** | $149 per month | 5 technicians; Your own setup recipes; Custom hourly rate; Tracked jobs with sign-off |
 | **Done-for-you** | $299 per household setup | We set it up for you; Backups and protections included; 30 days of support |
 
 To start a trial or buy a plan, [request access](https://github.com/eliem08/agentsetup/issues/new?title=AgentSetup%20trial&labels=sales).
@@ -84,6 +84,9 @@ Proprietary. Copyright (c) 2026 eliem08. All rights reserved. Use requires a pai
   homework helper with guardrails, elder check-in + scam shield, bookkeeping
   assistant, customer-reply bot, …) each with prerequisites, setup steps,
   minutes of tech time, monthly software cost
+- **Your own recipes**: `recipe-add` the setups your shop sells (goal, audience, required tools, minutes, monthly
+  cost, ordered steps). They are preferred over built-in ones when both fit, and one with a built-in key (such as
+  `backups`) replaces it. `recipes` marks yours with `*`.
 - **Planner** picks recipes matching goals and tools, adds mandatory safety
   recipes (kids → content filters; seniors → scam protection; business →
   access controls + backups), drops ones over budget or violating privacy
@@ -97,6 +100,7 @@ pip install -e .
 agentsetup recipes
 agentsetup plan examples/family.json
 agentsetup plan examples/bakery.json --rate 95
+agentsetup recipe-add crm_hubspot --title "CRM follow-up agent (HubSpot)" --goal crm --audience business   --needs hubspot --minutes 60 --monthly 30 --cloud   --step "Create a HubSpot private app" --step "Map deal stages" --step "Turn on follow-up drafts"
 ```
 
 ## Roadmap
